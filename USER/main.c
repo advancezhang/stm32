@@ -255,17 +255,15 @@ int IncPIDCalc(int NextPoint)
 extern u8  TIM4CH1_CAPTURE_STA;		//输入捕获状态		    				
 extern u16	TIM4CH1_CAPTURE_VAL;	//输入捕获值	
 void lcdspeed(void);
+void drawspeed(void);
 
-//u16 led0pwmval=3840;
-//u16 cycle=4800;
-//int b;
-//vu8 key=0;
 u8 actual=50;
 u16 adcx;
 float temp;
 float angle;
 u8 buffer[7];
 u8 str[7];
+u16 count=10;
 
 int main(void)
 {
@@ -302,6 +300,7 @@ int main(void)
 	while(1)
 	{
 		lcdspeed();
+		drawspeed();
 		para=IncPIDCalc(temp);
 	  /* 根据增量数值调整当前电机速度 */
 		//if((para<-3)||(para>3)) // 不做 PID 调整，避免误差较小时频繁调节引起震荡。
@@ -331,5 +330,14 @@ void lcdspeed(void)
 	TIM4->CNT=0;
 	delay_ms(1000);
 }
-
+void drawspeed(void)
+{
+	count++;
+	LCD_DrawLine(count,300+temp,count+1,300+temp);
+	if(count>70)
+	{
+		count=10;
+		LCD_Fill(12,212,468,448,WHITE);
+	}
+}
 
