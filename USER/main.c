@@ -263,7 +263,7 @@ float temp;
 float angle;
 u8 buffer[7];
 u8 str[7];
-u16 count=10;
+u16 count=47;
 
 int main(void)
 {
@@ -282,21 +282,7 @@ int main(void)
 	/* Ê¹ÄÜPWMÊä³ö */
   DCMOTOR_25GA370_Contrl(4,0,0); 
 	
-	LCD_ShowString(15,35,85,40,24,"Speed:");
-	LCD_ShowString(245,35,85,40,24,"Angle:");
-	LCD_ShowString(15,135,65,40,24,"Set   Speed:");
-	LCD_ShowString(245,135,65,40,24,"Set   Angle:");
-	LCD_DrawRectangle(10,10,470,100);
-	LCD_DrawRectangle(10,110,470,200);
-	LCD_DrawRectangle(10,210,470,450);
-	LCD_DrawRectangle(10,510,470,750);
-	LCD_DrawLine(90,10,90,100);
-	LCD_DrawLine(240,10,240,100);
-	LCD_DrawLine(320,10,320,100);
-	LCD_DrawLine(90,110,90,200);
-	LCD_DrawLine(240,110,240,200);
-	LCD_DrawLine(320,110,320,200);
-	LCD_ShowString(95,160,85,40,24,"50");
+
 	while(1)
 	{
 		lcdspeed();
@@ -332,12 +318,35 @@ void lcdspeed(void)
 }
 void drawspeed(void)
 {
+	u8 i;
 	count++;
-	LCD_DrawLine(count,300+temp,count+1,300+temp);
-	if(count>70)
+	LCD_DrawLine(count,450-temp*2,count+1,450-temp*2);
+	if(count>470)
 	{
 		count=10;
-		LCD_Fill(12,212,468,448,WHITE);
+		LCD_Fill(47,212,468,448,WHITE);
 	}
+	for(i=0;i<=10;i++)
+	{
+		LCD_DrawLine(45,i*20+230,33,i*20+230);
+	}
+	LCD_ShowString(15,35,85,40,24,"Speed:");
+	LCD_ShowString(245,35,85,40,24,"Angle:");
+	LCD_ShowString(15,135,65,40,24,"Set   Speed:");
+	LCD_ShowString(245,135,65,40,24,"Set   Angle:");
+	LCD_ShowString(20,450,85,40,24,"0");
+	LCD_ShowString(0,320,85,40,24,"50");
+	LCD_ShowString(0,220,85,40,24,"100");
+	LCD_DrawRectangle(10,10,470,100);
+	LCD_DrawRectangle(10,110,470,200);
+	LCD_DrawRectangle(45,210,470,450);
+	LCD_DrawRectangle(10,510,470,750);
+	LCD_DrawLine(90,10,90,100);
+	LCD_DrawLine(240,10,240,100);
+	LCD_DrawLine(320,10,320,100);
+	LCD_DrawLine(90,110,90,200);
+	LCD_DrawLine(240,110,240,200);
+	LCD_DrawLine(320,110,320,200);
+	LCD_ShowString(95,160,85,40,24,"50");
 }
 
