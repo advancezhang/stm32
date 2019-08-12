@@ -205,6 +205,52 @@
 #include "lcd.h"
 #include "stdio.h"
 #include "pid.h"
+#include "brush.h" 
+
+typedef struct 
+{
+   __IO int      SetPoint;                                 //设定目标 Desired Value
+   __IO double   Proportion;                               //比例常数 Proportional Const
+   __IO double   Integral;                                 //积分常数 Integral Const
+   __IO double   Derivative;                               //微分常数 Derivative Const
+   __IO int      LastError;                                //Error[-1]
+   __IO int      PrevError;                                //Error[-2]
+}PID;
+
+
+#define  P_DATA      -1.5                                 //P参数
+#define  I_DATA      0.8                                //I参数
+#define  D_DATA      0.4                               //D参数
+
+__IO uint16_t dcmotor_speed=3000;
+__IO double encoder_speed=0;
+
+static PID sPID;
+static PID *sptr = &sPID;
+
+/**************PID参数初始化********************************/
+void IncPIDInit(void) 
+{
+    sptr->LastError=0;            //Error[-1]
+    sptr->PrevError=0;            //Error[-2]
+    sptr->Proportion=P_DATA;      //比例常数 Proportional Const
+    sptr->Integral=I_DATA;        //积分常数  Integral Const
+    sptr->Derivative=D_DATA;      //微分常数 Derivative Const
+    sptr->SetPoint=50;           //设定目标Desired Value
+}
+/********************增量式PID控制设计************************************/
+int IncPIDCalc(int NextPoint) 
+{
+  int iError,iIncpid;                                 //当前误差
+  iError=sptr->SetPoint-NextPoint;                    //增量计算
+  iIncpid=(sptr->Proportion * iError)                 //E[k]项
+              -(sptr->Integral * sptr->LastError)     //E[k-1]项
+              +(sptr->Derivative * sptr->PrevError);  //E[k-2]项
+              
+  sptr->PrevError=sptr->LastError;                    //存储误差，用于下次计算
+  sptr->LastError=iError;
+  return(iIncpid);                                    //返回增量值
+}
 
 extern u8  TIM4CH1_CAPTURE_STA;		//输入捕获状态		    				
 extern u16	TIM4CH1_CAPTURE_VAL;	//输入捕获值	
@@ -220,17 +266,23 @@ float temp;
 float angle;
 u8 buffer[7];
 u8 str[7];
-	
+
 int main(void)
 {
+  float para;
+	
 	delay_init();
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
 	uart_init(115200);
-  //TIM3_PWM_Init(cycle-1,0);//通用定时器不分频时钟频率72000000。PWM频率=72000000/4800=15Khz自动装载值4799（中断计算频率4799+1=4800）
+  TIM3_PWM_Init(4799,0);//通用定时器不分频时钟频率72000000。PWM频率=72000000/4800=15Khz自动装载值4799（中断计算频率4799+1=4800）
 	//（4799，0）表示0计数到4799的时间为计算PWM波的周期
 	TIM4_Encoder_Init(0xffff,72-1);
 	LCD_Init();
 	KEY_Init();
+	DCMOTOR_BRUSH_TIMx_PWM_Init(); 
+	IncPIDInit();
+	/* 使能PWM输出 */
+  DCMOTOR_25GA370_Contrl(4,0,0); 
 	
 	LCD_ShowString(15,35,85,40,24,"Speed:");
 	LCD_ShowString(245,35,85,40,24,"Angle:");
@@ -246,10 +298,18 @@ int main(void)
 	LCD_DrawLine(90,110,90,200);
 	LCD_DrawLine(240,110,240,200);
 	LCD_DrawLine(320,110,320,200);
+	LCD_ShowString(95,160,85,40,24,"50");
 	while(1)
 	{
 		lcdspeed();
-		LCD_ShowString(95,160,85,40,24,"50");					 
+		para=IncPIDCalc(temp);
+	  /* 根据增量数值调整当前电机速度 */
+		//if((para<-3)||(para>3)) // 不做 PID 调整，避免误差较小时频繁调节引起震荡。
+		//{
+			dcmotor_speed +=para;  
+		//}
+		if(dcmotor_speed>60000)dcmotor_speed=0;      
+    DCMOTOR_25GA370_Contrl(1,1,dcmotor_speed);
   }
 	}
 
@@ -257,32 +317,19 @@ void lcdspeed(void)
 {
 	adcx=TIM4->CNT;
 	temp=(float)adcx/10;
-	//angle=adcx*36;
-	sprintf((char*)buffer,"%.2f",temp);
-	//sprintf(str,"%.1f",angle);
-	LCD_ShowString(95,35,85,40,24,buffer);
-	//LCD_ShowString(325,35,95,40,24,str);
+	if(temp>2000)
+	{
+		temp=6553.5-temp;
+		sprintf((char*)buffer,"%.2f",temp);
+	  LCD_ShowString(95,35,85,40,24,buffer);
+	}
+	else
+	{
+		sprintf((char*)buffer,"%.2f",temp);
+		LCD_ShowString(95,35,85,40,24,buffer);
+	}
 	TIM4->CNT=0;
 	delay_ms(1000);
 }
-void PID_init(){
-		pid.SetSpeed=0.0;
-		pid.ActualSpeed=0.0;
-		pid.err=0.0;
-		pid.err_last=0.0;
-		pid.voltage=0.0;
-		pid.integral=0.0;
-		pid.Kp=0.2;
-		pid.Ki=0.015; 
-		pid.Kd=0.2;
-}
-float PID_realize(float speed){
-	pid.SetSpeed=speed;
-	pid.err=pid.SetSpeed-pid.ActualSpeed;
-	pid.integral+=pid.err;
-	pid.voltage=pid.Kp*pid.err+pid.Ki*pid.integral+pid.Kd*(pid.err-pid.err_last);
-	pid.err_last=pid.err;
-	pid.ActualSpeed=pid.voltage*1.0;
-	return pid.ActualSpeed;
-}	
+
 

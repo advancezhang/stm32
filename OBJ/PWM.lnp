@@ -6,6 +6,7 @@
 "..\obj\timer.o"
 "..\obj\encoder.o"
 "..\obj\lcd.o"
+"..\obj\brush.o"
 "..\obj\delay.o"
 "..\obj\sys.o"
 "..\obj\usart.o"

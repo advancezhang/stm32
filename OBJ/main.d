@@ -38,3 +38,4 @@
 ..\obj\main.o: ..\HARDWARE\LCD\lcd.h
 ..\obj\main.o: F:\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
 ..\obj\main.o: ..\HARDWARE\PID\pid.h
+..\obj\main.o: ..\HARDWARE\BRUSH\brush.h
