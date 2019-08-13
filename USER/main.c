@@ -319,6 +319,7 @@ void lcdspeed(void)
 void drawspeed(void)
 {
 	u8 i;
+	u8 a;
 	count++;
 	LCD_DrawLine(count,450-temp*2,count+1,450-temp*2);
 	if(count>470)
@@ -330,6 +331,10 @@ void drawspeed(void)
 	{
 		LCD_DrawLine(45,i*20+230,33,i*20+230);
 	}
+	for(a=0;a<=35;a++)
+	{
+		LCD_DrawLine(45,a*5+500,33,a*5+500);
+	}
 	LCD_ShowString(15,35,85,40,24,"Speed:");
 	LCD_ShowString(245,35,85,40,24,"Angle:");
 	LCD_ShowString(15,135,65,40,24,"Set   Speed:");
@@ -338,14 +343,20 @@ void drawspeed(void)
 	LCD_ShowString(0,340,85,40,24,"50");
 	LCD_ShowString(0,240,85,40,24,"100");
 	LCD_ShowString(95,160,85,40,24,"50");
+	LCD_ShowString(20,670,60,30,24,"0");
+	LCD_ShowString(0,575,60,30,24,"180");
+	LCD_ShowString(0,485,60,30,24,"360");
 	LCD_ShowString(15,720,77,40,24,"KP");
 	LCD_ShowString(169,720,77,40,24,"KI");
 	LCD_ShowString(323,720,77,40,24,"KD");
+	LCD_ShowString(92,720,77,40,24,"-1.5");
+	LCD_ShowString(246,720,77,40,24,"0.8");
+	LCD_ShowString(400,720,77,40,24,"0.4");
 	LCD_DrawRectangle(10,10,470,100);
 	LCD_DrawRectangle(10,110,470,200);
 	LCD_DrawRectangle(45,210,470,450);
-	LCD_DrawRectangle(45,490,470,680);
-	LCD_DrawRectangle(10,690,470,780);
+	LCD_DrawRectangle(45,470,470,680);
+	LCD_DrawRectangle(10,700,470,790);
 	LCD_DrawLine(87,690,87,780);
 	LCD_DrawLine(164,690,164,780);
 	LCD_DrawLine(241,690,241,780);
