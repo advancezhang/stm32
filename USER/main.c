@@ -337,6 +337,10 @@ void drawspeed(void)
 	LCD_ShowString(20,450,85,40,24,"0");
 	LCD_ShowString(0,340,85,40,24,"50");
 	LCD_ShowString(0,240,85,40,24,"100");
+	LCD_ShowString(95,160,85,40,24,"50");
+	LCD_ShowString(15,720,77,40,24,"KP");
+	LCD_ShowString(169,720,77,40,24,"KI");
+	LCD_ShowString(323,720,77,40,24,"KD");
 	LCD_DrawRectangle(10,10,470,100);
 	LCD_DrawRectangle(10,110,470,200);
 	LCD_DrawRectangle(45,210,470,450);
@@ -353,6 +357,6 @@ void drawspeed(void)
 	LCD_DrawLine(90,110,90,200);
 	LCD_DrawLine(240,110,240,200);
 	LCD_DrawLine(320,110,320,200);
-	LCD_ShowString(95,160,85,40,24,"50");
+	
 }
 
