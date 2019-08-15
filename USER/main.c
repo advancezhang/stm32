@@ -256,6 +256,7 @@ extern u8  TIM4CH1_CAPTURE_STA;		//输入捕获状态
 extern u16	TIM4CH1_CAPTURE_VAL;	//输入捕获值	
 void lcdspeed(void);
 void drawspeed(void);
+void USART(void);
 
 u16 adcx;
 float temp;
@@ -286,6 +287,7 @@ int main(void)
 	{
 		lcdspeed();
 		drawspeed();
+		USART();
 		para=IncPIDCalc(temp);
 	  /* 根据增量数值调整当前电机速度 */
 		//if((para<-3)||(para>3)) // 不做 PID 调整，避免误差较小时频繁调节引起震荡。
@@ -335,8 +337,6 @@ void drawspeed(void)
 		LCD_DrawLine(45,a*5+500,33,a*5+500);
 		LCD_DrawLine(45,590,28,590);
 	}
-	sprintf((char*)str,"%d",sptr->SetPoint);
-	LCD_ShowString(95,160,85,40,24,str);
 	LCD_ShowString(15,35,85,40,24,"Speed:");
 	LCD_ShowString(245,35,85,40,24,"Angle:");
 	LCD_ShowString(15,135,65,40,24,"Set   Speed:");
@@ -369,6 +369,39 @@ void drawspeed(void)
 	LCD_DrawLine(90,110,90,200);
 	LCD_DrawLine(240,110,240,200);
 	LCD_DrawLine(320,110,320,200);
-	
 }
+void USART(void)
+{
+	u16 t;  
+	u16 len;	
+	u8 str[4];
+	u8 chr[4];
+	if(USART_RX_STA&0x8000)
+		{					   
+			len=USART_RX_STA&0x3fff;//得到此次接收到的数据长度
+			printf("\r\n您发送的消息为:\r\n\r\n");
+			for(t=0;t<len;t++)
+			{
+				USART_SendData(USART1, USART_RX_BUF[t]);//向串口1发送数据
+				while(USART_GetFlagStatus(USART1,USART_FLAG_TC)!=SET);//等待发送结束
+			}
+			printf("\r\n\r\n");//插入换行
+			USART_RX_STA=0;
+		}
+//		LCD_ShowString(30,150,200,16,16,&USART_RX_BUF[0]);
+//		x=(USART_RX_BUF[0]-'0')*100+(USART_RX_BUF[1]-'0')*10+USART_RX_BUF[2]-'0';
+//		sprintf((char*)str,"%d",x);
+		str[0]=USART_RX_BUF[0];
+		str[1]=USART_RX_BUF[1];
+		str[2]=USART_RX_BUF[2];
+		chr[0]=USART_RX_BUF[3];
+		chr[1]=USART_RX_BUF[4];
+		chr[2]=USART_RX_BUF[5];
+	  LCD_ShowString(95,160,45,40,24,str);
+		LCD_ShowString(246,720,77,40,24,chr);
+		sptr->SetPoint=atoi(str);
+		printf("num=%d",sptr->SetPoint);
+		printf("\r\n\r\n");
+}
+
 
