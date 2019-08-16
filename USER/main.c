@@ -312,6 +312,7 @@ void lcdspeed(void)
 	else
 	{
 		sprintf((char*)buffer,"%.2f",temp);
+		sprintf((char*)buffer,"%.2f",temp);
 		LCD_ShowString(95,35,85,40,24,buffer);
 	}
 	TIM4->CNT=0;
