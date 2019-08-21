@@ -2,6 +2,6 @@
 #define _ENCODER_H
 #include "sys.h"
 
-void TIM4_Encoder_Init(u16 arr,u16 psc);
+void TIM5_Encoder_Init(u16 arr,u16 psc);
 
 #endif

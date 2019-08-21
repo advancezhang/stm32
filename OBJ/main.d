@@ -33,9 +33,12 @@
 ..\obj\main.o: ..\SYSTEM\usart\usart.h
 ..\obj\main.o: F:\Keil\ARM\ARMCC\Bin\..\include\stdio.h
 ..\obj\main.o: ..\HARDWARE\Encoder\encoder.h
-..\obj\main.o: ..\HARDWARE\TIMER\timer.h
 ..\obj\main.o: ..\HARDWARE\KEY\key.h
 ..\obj\main.o: ..\HARDWARE\LCD\lcd.h
 ..\obj\main.o: F:\Keil\ARM\ARMCC\Bin\..\include\stdlib.h
-..\obj\main.o: ..\HARDWARE\PID\pid.h
 ..\obj\main.o: ..\HARDWARE\BRUSH\brush.h
+..\obj\main.o: ..\HARDWARE\24CXX\24cxx.h
+..\obj\main.o: ..\HARDWARE\IIC\myiic.h
+..\obj\main.o: ..\USMART\usmart.h
+..\obj\main.o: ..\USMART\usmart_str.h
+..\obj\main.o: ..\HARDWARE\Show\show.h
