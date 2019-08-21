@@ -10,6 +10,7 @@
 "..\obj\24cxx.o"
 "..\obj\myiic.o"
 "..\obj\show.o"
+"..\obj\remote.o"
 "..\obj\delay.o"
 "..\obj\sys.o"
 "..\obj\usart.o"

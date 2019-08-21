@@ -22,8 +22,8 @@ typedef struct
 }PID;
 
 
-float P_DATA=0.004;                               //P参数
-float I_DATA=2.8;                                //I参数
+float P_DATA=0.5;                               //P参数
+float I_DATA=0.8;                                //I参数
 float D_DATA=0.4;                               //D参数
 
 uint16_t dcmotor_speed=3000;
@@ -117,9 +117,9 @@ void drawspeed(void)
 	LCD_ShowString(20,670,60,30,16,"0");
 	LCD_ShowString(0,580,60,30,16,"180");
 	LCD_ShowString(0,485,60,30,16,"360");
-	LCD_ShowString(15,720,77,40,24,"KP");
-	LCD_ShowString(169,720,77,40,24,"KI");
-	LCD_ShowString(323,720,77,40,24,"KD");
+	LCD_ShowString(15,720,37,40,24,"KP");
+	LCD_ShowString(169,720,37,40,24,"KI");
+	LCD_ShowString(323,720,37,40,24,"KD");
 	LCD_DrawRectangle(10,10,470,100);
 	LCD_DrawRectangle(10,110,470,200);
 	LCD_DrawRectangle(45,210,470,450);
@@ -143,9 +143,10 @@ void USART(void)
 //	#define SIZE2 sizeof(ptr)
 //	#define SIZE3 sizeof(itr)
 //	#define SIZE4 sizeof(dtr)
-	u16 t;  
+	u16 t; 
+  u8 key=0;	
 	u16 len;	
-	u8 str[12];
+	u8 str[15];
 	u8 speed[4];
 	u8 ptr[4];
 	u8 itr[4];
@@ -161,7 +162,10 @@ void USART(void)
 			for(t=0;t<len;t++)
 			{
 				USART_SendData(USART1, USART_RX_BUF[t]);//向串口1发送数据
-				while(USART_GetFlagStatus(USART1,USART_FLAG_TC)!=SET);//等待发送结束
+				while(USART_GetFlagStatus(USART1,USART_FLAG_TC)!=SET)//等待发送结束
+				{
+					key=1;
+				}
 			}
 			printf("\r\n\r\n");//插入换行
 			USART_RX_STA=0;
@@ -178,6 +182,9 @@ void USART(void)
 		str[9]=USART_RX_BUF[9];
 		str[10]=USART_RX_BUF[10];
 		str[11]=USART_RX_BUF[11];
+		str[12]=USART_RX_BUF[12];
+		str[13]=USART_RX_BUF[13];
+		str[14]=USART_RX_BUF[14];
 //		ptr[0]=USART_RX_BUF[3];
 //		ptr[1]=USART_RX_BUF[4];
 //		ptr[2]=USART_RX_BUF[5];
@@ -193,36 +200,44 @@ void USART(void)
 //  	LCD_ShowString(400,720,77,40,24,dtr);
 //		printf("num=%d",sptr->SetPoint);
 //		printf("\r\n\r\n");
-		if(USART_RX_STA)
-		{
-		  AT24CXX_Write(0x00,(u8*)str,SIZE1);
+//		if(USART_RX_STA)
+//		{
+    // key=KEY_Scan(0);
+		 if(key)
+		 {
+		   AT24CXX_Write(0,(u8*)str,SIZE1);
 //			AT24CXX_Write(0x00,(u8*)ptr,SIZE2);
 //			AT24CXX_Write(0x00,(u8*)itr,SIZE3);
 //			AT24CXX_Write(0x00,(u8*)dtr,SIZE4);
-		}
-		AT24CXX_Read(0x00,datatemp1,12);
+	//	}
+		 }
+		   AT24CXX_Read(0,datatemp1,18);
+		
 //		AT24CXX_Read(0x00,datatemp2,2);
 //		AT24CXX_Read(0x00,datatemp3,2);
 //		AT24CXX_Read(0x00,datatemp4,2);
 		speed[0]=datatemp1[0];
 		speed[1]=datatemp1[1];
 		speed[2]=datatemp1[2];
-		ptr[0]=datatemp1[3];
-		ptr[1]=datatemp1[4];
-		ptr[2]=datatemp1[5];
-		itr[0]=datatemp1[6];
-		itr[1]=datatemp1[7];
-		itr[2]=datatemp1[8];
-		dtr[0]=datatemp1[9];
-		dtr[1]=datatemp1[10];
-		dtr[2]=datatemp1[11];
+		 
+		ptr[0]=datatemp1[4];
+		ptr[1]=datatemp1[5];
+		ptr[2]=datatemp1[6];
+		 
+		itr[0]=datatemp1[8];
+		itr[1]=datatemp1[9];
+		itr[2]=datatemp1[10];
+		 
+		dtr[0]=datatemp1[12];
+		dtr[1]=datatemp1[13];
+		dtr[2]=datatemp1[14];
 		sptr->SetPoint=atoi((char*)speed);
 		LCD_ShowString(95,160,45,40,24,speed);
 		sptr->Proportion=atoi((char*)ptr);
-		LCD_ShowString(92,720,77,40,24,ptr);
+		LCD_ShowString(92,720,37,40,24,ptr);
 		sptr->Integral=atoi((char*)itr);
-		LCD_ShowString(246,720,77,40,24,itr);
+		LCD_ShowString(246,720,37,40,24,itr);
 		sptr->Derivative=atoi((char*)dtr);
-		LCD_ShowString(400,720,77,40,24,dtr);
+		LCD_ShowString(400,720,37,40,24,dtr);
 }
 

@@ -9,6 +9,7 @@
 #include "usmart.h"	 
 #include "24cxx.h"
 #include "show.h"
+#include "remote.h"
 
 extern void lcdspeed(void);
 extern void drawspeed(void);
