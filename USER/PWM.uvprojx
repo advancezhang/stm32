@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\HARDWARE\LED;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\STM32F10x_FWLib\inc;..\CORE;..\HARDWARE\KEY;..\HARDWARE\TIMER;..\HARDWARE\PID;..\HARDWARE\Encoder;..\HARDWARE\LCD;..\HARDWARE\BRUSH;..\HARDWARE\24CXX;..\HARDWARE\IIC;..\USMART;..\HARDWARE\Show</IncludePath>
+              <IncludePath>..\HARDWARE\LED;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\USER;..\STM32F10x_FWLib\inc;..\CORE;..\HARDWARE\KEY;..\HARDWARE\TIMER;..\HARDWARE\PID;..\HARDWARE\Encoder;..\HARDWARE\LCD;..\HARDWARE\BRUSH;..\HARDWARE\24CXX;..\HARDWARE\IIC;..\USMART;..\HARDWARE\Show;..\HARDWARE\REMOTE</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -467,6 +467,11 @@
               <FileName>show.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\Show\show.c</FilePath>
+            </File>
+            <File>
+              <FileName>remote.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\HARDWARE\REMOTE\remote.c</FilePath>
             </File>
           </Files>
         </Group>

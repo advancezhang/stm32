@@ -16,7 +16,7 @@ extern void drawspeed(void);
 extern void USART(void);
 extern void IncPIDInit(void);
 extern int IncPIDCalc(int NextPoint);
-
+extern void KeyAction(void);
 
 extern u8  TIM4CH1_CAPTURE_STA;		//输入捕获状态		    				
 extern u16	TIM4CH1_CAPTURE_VAL;	//输入捕获值	
@@ -25,6 +25,15 @@ extern u16	TIM4CH1_CAPTURE_VAL;	//输入捕获值
 extern float temp;
 float angle;
 
+
+extern void controlD(void);
+extern void controlI(void);
+extern void controlP(void);
+extern void controlSpeed(void);
+extern void controlAngle(void);
+extern void ScanAll(void);
+extern void scan(void);
+extern u8 Break;
 
 int main(void)
 {
@@ -38,6 +47,7 @@ int main(void)
 	LCD_Init();
 	KEY_Init();
 	AT24CXX_Init();
+	Remote_Init();
 	DCMOTOR_BRUSH_TIMx_PWM_Init(); 
 	IncPIDInit();
 	/* 使能PWM输出 */
@@ -48,7 +58,15 @@ int main(void)
 	{
 		lcdspeed();
 		drawspeed();
-		USART();
+		scan();
+		if(Break)
+		{
+		  USART();
+		}
+		else
+		{
+			ScanAll();
+		}
   }
 }
 

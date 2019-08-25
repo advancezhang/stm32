@@ -42,3 +42,5 @@
 ..\obj\show.o: ..\USMART\usmart.h
 ..\obj\show.o: ..\USMART\usmart_str.h
 ..\obj\show.o: ..\HARDWARE\Show\show.h
+..\obj\show.o: ..\HARDWARE\REMOTE\remote.h
+..\obj\show.o: ..\USER\main.h

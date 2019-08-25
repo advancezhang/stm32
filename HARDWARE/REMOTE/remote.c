@@ -81,7 +81,6 @@ void TIM4_IRQHandler(void)
 			if((RmtSta&0X0F)==0X00)
 			{
 				RmtSta|=1<<6;	//标记已经完成一次按键的键值信息采集
-				RmtSta&=~(1<<7);
 			}
 			if((RmtSta&0X0F)<14)RmtSta++;
 			else

@@ -1,4 +1,5 @@
 #include "encoder.h"
+//float cnt;
 
 TIM_ICInitTypeDef TIM_ICInitStructure;
 void TIM5_Encoder_Init(u16 arr,u16 psc)            ///TIM4 编码器输入，TIM4_CH1作A相，TIM4_CH2作B相GPIO_Pin_6|GPIO_Pin_7;
@@ -83,11 +84,10 @@ void TIM5_IRQHandler(void)
     TIM_ClearITPendingBit(TIM5, TIM_IT_CC1|TIM_IT_Update); //清除中断标志位
  
 }
-float HF_Get_Encode_TIM5(void)
-{
-	float cnt;
-  cnt = (float)((uint16_t)0x7fff) - (float)((uint16_t)(TIM5->CNT)) ;
-  TIM5->CNT = 0x7fff;
-  return cnt;
-}
+//float HF_Get_Encode_TIM5(void)
+//{
+//  cnt = (float)((uint16_t)0x7fff) - (float)((uint16_t)(TIM5->CNT)) ;
+//  TIM5->CNT = 0x7fff;
+//  return cnt;
+//}
 
