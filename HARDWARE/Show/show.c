@@ -288,13 +288,13 @@ void ScanAll(void)                //控制扫描函数
 }
 void controlP(void)             //按键控制P参数修改
 {
-	u8 Pis[255];
-	key=Remote_Scan();
-	if(switchP)
+	u8 Pis[255];                   //
+	key=Remote_Scan();            //
+	if(switchP)                   //
 	{
-		if(key)
+		if(key)                    //
 		{	  
-			switch(key)
+			switch(key)                //
 			{
 				case 104:Pis[p] = '1';Pis[p+1] = '\0';p+=1;break;
 				case 152:Pis[p] = '2';Pis[p+1] = '\0';p+=1;break;
@@ -309,14 +309,14 @@ void controlP(void)             //按键控制P参数修改
 				case 82:Pis[p] = '.';Pis[p+1] = '\0';p+=1;break;
 				
 			}
-		while(p>=3)
+		while(p>=3)             //
 		{
 			p=0;
 		}
-		sptr->Proportion=atoi((char*)Pis);
-		LCD_ShowString(15,750,37,40,24,"P");
-		LCD_ShowString(92,720,37,40,24,Pis);
-		}
+		sptr->Proportion=atoi((char*)Pis);            //
+		LCD_ShowString(15,750,37,40,24,"P");          //
+		LCD_ShowString(92,720,37,40,24,Pis);          //
+		} 
 	}
 
 	
