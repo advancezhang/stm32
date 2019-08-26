@@ -290,7 +290,7 @@ void controlP(void)             //按键控制P参数修改
 {
 	u8 Pis[255];                   //参数P的显示设置
 	key=Remote_Scan();            //红外扫描键值
-	if(switchP)                   //
+	if(switchP)                   //判断是否为P控制
 	{
 		if(key)                    //
 		{	  
