@@ -265,7 +265,7 @@ I (..\STM32F10x_FWLib\inc\stm32f10x_usart.h)(0x5D552FA7)
 I (..\STM32F10x_FWLib\inc\stm32f10x_wwdg.h)(0x5D552FA7)
 I (..\STM32F10x_FWLib\inc\misc.h)(0x5D552FA7)
 I (..\SYSTEM\delay\delay.h)(0x5D552FA7)
-F (..\HARDWARE\Show\show.c)(0x5D639993)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I ..\HARDWARE\LED -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\STM32F10x_FWLib\inc -I ..\CORE -I ..\HARDWARE\KEY -I ..\HARDWARE\TIMER -I ..\HARDWARE\PID -I ..\HARDWARE\Encoder -I ..\HARDWARE\LCD -I ..\HARDWARE\BRUSH -I ..\HARDWARE\24CXX -I ..\HARDWARE\IIC -I ..\USMART -I ..\HARDWARE\Show -I ..\HARDWARE\REMOTE-I.\RTE\_Motor-II:\Baidu\MDK\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include-II:\Baidu\MDK\ARM\CMSIS\Include-D__UVISION_VERSION="523" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\obj\show.o --omf_browse ..\obj\show.crf --depend ..\obj\show.d)
+F (..\HARDWARE\Show\show.c)(0x5D6399D6)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I ..\HARDWARE\LED -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\USER -I ..\STM32F10x_FWLib\inc -I ..\CORE -I ..\HARDWARE\KEY -I ..\HARDWARE\TIMER -I ..\HARDWARE\PID -I ..\HARDWARE\Encoder -I ..\HARDWARE\LCD -I ..\HARDWARE\BRUSH -I ..\HARDWARE\24CXX -I ..\HARDWARE\IIC -I ..\USMART -I ..\HARDWARE\Show -I ..\HARDWARE\REMOTE-I.\RTE\_Motor-II:\Baidu\MDK\ARM\PACK\Keil\STM32F1xx_DFP\1.1.0\Device\Include-II:\Baidu\MDK\ARM\CMSIS\Include-D__UVISION_VERSION="523" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\obj\show.o --omf_browse ..\obj\show.crf --depend ..\obj\show.d)
 I (..\SYSTEM\delay\delay.h)(0x5D552FA7)
 I (..\SYSTEM\sys\sys.h)(0x5D552FA7)
 I (..\USER\stm32f10x.h)(0x5D552FA7)
