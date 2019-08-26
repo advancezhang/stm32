@@ -292,9 +292,9 @@ void controlP(void)             //按键控制P参数修改
 	key=Remote_Scan();            //红外扫描键值
 	if(switchP)                   //判断是否为P控制
 	{
-		if(key)                    //
+		if(key)                    //判断按键是否按下
 		{	  
-			switch(key)                //
+			switch(key)                //转换按键按下的显示
 			{
 				case 104:Pis[p] = '1';Pis[p+1] = '\0';p+=1;break;
 				case 152:Pis[p] = '2';Pis[p+1] = '\0';p+=1;break;
