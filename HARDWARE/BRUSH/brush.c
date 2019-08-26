@@ -28,25 +28,11 @@ static void DCMOTOR_BRUSH_TIMx_GPIO_Config(void)
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_Init(DCMOTOR_BRUSH_TIM_CH1_PORT, &GPIO_InitStructure);
 
-//  /* 配置定时器通道2输出引脚模式 */
-//  GPIO_InitStructure.GPIO_Pin =  DCMOTOR_BRUSH_TIM_CH2_PIN;
-//  GPIO_Init(DCMOTOR_BRUSH_TIM_CH2_PORT, &GPIO_InitStructure);
-
-//  /* 配置定时器通道3输出引脚模式 */
-//  GPIO_InitStructure.GPIO_Pin =  DCMOTOR_BRUSH_TIM_CH3_PIN;
-//  GPIO_Init(DCMOTOR_BRUSH_TIM_CH3_PORT, &GPIO_InitStructure);
 //  
   /* 配置定时器互补通道1输出引脚模式 */
   GPIO_InitStructure.GPIO_Pin =  DCMOTOR_BRUSH_TIM_CH1N_PIN;
   GPIO_Init(DCMOTOR_BRUSH_TIM_CH1N_PORT, &GPIO_InitStructure);
-  
-//  /* 配置定时器互补通道2输出引脚模式 */
-//  GPIO_InitStructure.GPIO_Pin =  DCMOTOR_BRUSH_TIM_CH2N_PIN;
-//  GPIO_Init(DCMOTOR_BRUSH_TIM_CH2N_PORT, &GPIO_InitStructure);
-//  
-//  /* 配置定时器互补通道3输出引脚模式 */
-//  GPIO_InitStructure.GPIO_Pin =  DCMOTOR_BRUSH_TIM_CH3N_PIN;
-//  GPIO_Init(DCMOTOR_BRUSH_TIM_CH3N_PORT, &GPIO_InitStructure);  
+   
 }
 
 /**
@@ -98,21 +84,6 @@ static void DCMOTOR_BRUSH_TIMx_Configuration(void)
   /* 定时器比较输出通道1预装载配置：使能预装载 */
   TIM_OC1PreloadConfig(DCMOTOR_BRUSH_TIMx, TIM_OCPreload_Enable);
   
-//  /* 定时器输出通道2模式配置 */
-//  /* 设置通道2的电平跳变值，输出另外一个占空比的PWM */
-//  TIM_OCInitStructure.TIM_Pulse = 1800-1;
-//  /* 初始化定时器通道2输出PWM */
-//  TIM_OC2Init(DCMOTOR_BRUSH_TIMx, &TIM_OCInitStructure);
-//  /* 定时器比较输出通道2预装载配置：使能预装载 */
-//  TIM_OC2PreloadConfig(DCMOTOR_BRUSH_TIMx, TIM_OCPreload_Enable);
-
-//  /* 定时器输出通道3模式配置 */
-//  /* 设置通道3的电平跳变值，输出另外一个占空比的PWM */
-//  TIM_OCInitStructure.TIM_Pulse = 1800-1;
-//  /* 初始化定时器通道3输出PWM */
-//  TIM_OC3Init(DCMOTOR_BRUSH_TIMx, &TIM_OCInitStructure);
-//  /* 定时器比较输出通道3预装载配置：使能预装载 */
-//  TIM_OC3PreloadConfig(DCMOTOR_BRUSH_TIMx, TIM_OCPreload_Enable);
   
   /* 使能定时器重载寄存器ARR */
   TIM_ARRPreloadConfig(DCMOTOR_BRUSH_TIMx, ENABLE);
@@ -175,42 +146,7 @@ void DCMOTOR_25GA370_Contrl(uint8_t number,uint8_t direction,uint16_t speed)
       }
       TIM_SetCompare1(DCMOTOR_BRUSH_TIMx,speed);
       break; 
-//    case 2:
-//      if(direction==1)
-//      {
-//        TIM_CCxCmd(DCMOTOR_BRUSH_TIMx,TIM_Channel_2,TIM_CCx_Enable);
-//        TIM_CCxNCmd(DCMOTOR_BRUSH_TIMx,TIM_Channel_2,TIM_CCxN_Disable);
-//      }
-//      else if(direction==2)
-//      {
-//        TIM_CCxCmd(DCMOTOR_BRUSH_TIMx,TIM_Channel_2,TIM_CCx_Disable);
-//        TIM_CCxNCmd(DCMOTOR_BRUSH_TIMx,TIM_Channel_2,TIM_CCxN_Enable);
-//      }
-//      else
-//      {
-//        TIM_CCxCmd(DCMOTOR_BRUSH_TIMx,TIM_Channel_2,TIM_CCx_Disable);
-//        TIM_CCxNCmd(DCMOTOR_BRUSH_TIMx,TIM_Channel_2,TIM_CCxN_Disable);
-//      }
-//      TIM_SetCompare2(DCMOTOR_BRUSH_TIMx,speed);
-//    break; 
-//   case 3:
-//      if(direction==1)
-//      {
-//        TIM_CCxCmd(DCMOTOR_BRUSH_TIMx,TIM_Channel_3,TIM_CCx_Enable);
-//        TIM_CCxNCmd(DCMOTOR_BRUSH_TIMx,TIM_Channel_3,TIM_CCxN_Disable);
-//      }
-//      else if(direction==2)
-//      {
-//        TIM_CCxCmd(DCMOTOR_BRUSH_TIMx,TIM_Channel_3,TIM_CCx_Disable);
-//        TIM_CCxNCmd(DCMOTOR_BRUSH_TIMx,TIM_Channel_3,TIM_CCxN_Enable);
-//      }
-//      else
-//      {
-//        TIM_CCxCmd(DCMOTOR_BRUSH_TIMx,TIM_Channel_3,TIM_CCx_Disable);
-//        TIM_CCxNCmd(DCMOTOR_BRUSH_TIMx,TIM_Channel_3,TIM_CCxN_Disable);
-//      }
-//      TIM_SetCompare3(DCMOTOR_BRUSH_TIMx,speed);
-//    break;
+
    case 4:
      TIM_CtrlPWMOutputs(DCMOTOR_BRUSH_TIMx,ENABLE);  // 使能输出PWM，开始转动
      break;

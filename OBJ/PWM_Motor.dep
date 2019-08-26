@@ -1,4 +1,4 @@
-Dependencies for Project 'PWM', Target 'PWM': (DO NOT MODIFY !)
+Dependencies for Project 'PWM', Target 'Motor': (DO NOT MODIFY !)
 F (.\main.c)(0x5D62AEC1)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\HARDWARE\LED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\USER -I..\STM32F10x_FWLib\inc -I..\CORE -I..\HARDWARE\KEY -I..\HARDWARE\TIMER -I..\HARDWARE\PID -I..\HARDWARE\Encoder -I..\HARDWARE\LCD -I..\HARDWARE\BRUSH -I..\HARDWARE\24CXX -I..\HARDWARE\IIC -I..\USMART -I..\HARDWARE\Show -I..\HARDWARE\REMOTE-I C:\Users\张前进\Desktop\stm32直流电机驱动\stm32\USER\RTE-I F:\Keil\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I F:\Keil\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\obj\main.o --omf_browse ..\obj\main.crf --depend ..\obj\main.d)
 I (..\SYSTEM\delay\delay.h)(0x5D552FA7)
 I (..\SYSTEM\sys\sys.h)(0x5D552FA7)
@@ -266,7 +266,7 @@ I (..\STM32F10x_FWLib\inc\stm32f10x_usart.h)(0x5D552FA7)
 I (..\STM32F10x_FWLib\inc\stm32f10x_wwdg.h)(0x5D552FA7)
 I (..\STM32F10x_FWLib\inc\misc.h)(0x5D552FA7)
 I (..\SYSTEM\delay\delay.h)(0x5D552FA7)
-F (..\HARDWARE\Show\show.c)(0x5D62AEA1)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\HARDWARE\LED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\USER -I..\STM32F10x_FWLib\inc -I..\CORE -I..\HARDWARE\KEY -I..\HARDWARE\TIMER -I..\HARDWARE\PID -I..\HARDWARE\Encoder -I..\HARDWARE\LCD -I..\HARDWARE\BRUSH -I..\HARDWARE\24CXX -I..\HARDWARE\IIC -I..\USMART -I..\HARDWARE\Show -I..\HARDWARE\REMOTE-I C:\Users\张前进\Desktop\stm32直流电机驱动\stm32\USER\RTE-I F:\Keil\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I F:\Keil\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\obj\show.o --omf_browse ..\obj\show.crf --depend ..\obj\show.d)
+F (..\HARDWARE\Show\show.c)(0x5D63413E)(-c --cpu Cortex-M3 -D__MICROLIB -g -O0 --apcs=interwork -I..\HARDWARE\LED -I..\SYSTEM\delay -I..\SYSTEM\sys -I..\SYSTEM\usart -I..\USER -I..\STM32F10x_FWLib\inc -I..\CORE -I..\HARDWARE\KEY -I..\HARDWARE\TIMER -I..\HARDWARE\PID -I..\HARDWARE\Encoder -I..\HARDWARE\LCD -I..\HARDWARE\BRUSH -I..\HARDWARE\24CXX -I..\HARDWARE\IIC -I..\USMART -I..\HARDWARE\Show -I..\HARDWARE\REMOTE-I C:\Users\张前进\Desktop\stm32直流电机驱动\stm32\USER\RTE-I F:\Keil\ARM\PACK\Keil\STM32F1xx_DFP\1.0.5\Device\Include-I F:\Keil\ARM\CMSIS\Include-D__UVISION_VERSION="514" -DSTM32F10X_HD -DSTM32F10X_HD -DUSE_STDPERIPH_DRIVER-o ..\obj\show.o --omf_browse ..\obj\show.crf --depend ..\obj\show.d)
 I (..\SYSTEM\delay\delay.h)(0x5D552FA7)
 I (..\SYSTEM\sys\sys.h)(0x5D552FA7)
 I (..\USER\stm32f10x.h)(0x5D552FA7)

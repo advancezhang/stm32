@@ -45,7 +45,6 @@ int main(void)
 	//（4799，0）表示0计数到4799的时间为计算PWM波的周期
 	TIM5_Encoder_Init(0xffff,72-1);
 	LCD_Init();
-	KEY_Init();
 	AT24CXX_Init();
 	Remote_Init();
 	DCMOTOR_BRUSH_TIMx_PWM_Init(); 
@@ -59,7 +58,7 @@ int main(void)
 		lcdspeed();
 		drawspeed();
 		scan();
-		if(Break)
+		if(Break)//当外星人头像按下之后切换到按键控制，开关键按下切换到上位机控制
 		{
 		  USART();
 		}

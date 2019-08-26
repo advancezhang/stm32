@@ -1,7 +1,6 @@
 #include "delay.h"
 #include "usart.h"
 #include "encoder.h"
-//#include "timer.h"
 #include "key.h"
 #include "lcd.h"
 #include "stdio.h"
@@ -11,9 +10,6 @@
 #include "24cxx.h"
 #include "show.h"
 #include "remote.h"
-#include "main.h"
-
-enum eStaSystem staSystem = E_NORMAL;  //系统运行状态
 
 typedef struct 
 {
@@ -30,11 +26,11 @@ float P_DATA=1.5;                               //P参数
 float I_DATA=3.8;                                //I参数
 float D_DATA=6.4;                               //D参数
 
-uint16_t dcmotor_speed=3000;
+uint16_t dcmotor_speed=3000;   //
 double encoder_speed=0;
 u16 count=37;
 
-static PID sPID;
+static PID sPID;   //
 static PID *sptr = &sPID;
 
 /**************PID参数初始化********************************/
@@ -63,27 +59,27 @@ int IncPIDCalc(int NextPoint)
 extern u8  TIM5CH1_CAPTURE_STA;		//输入捕获状态		    				
 extern u16	TIM5CH1_CAPTURE_VAL;	//输入捕获值	
 
-u16 adcx;
+u16 adcx;  
 float temp;
-float para;
-float cnt;
-u8 key;
+float para;   //调整控制的PID差值
+float cnt;    //显示测定的速度
+u8 key;      //红外扫描的键值
 
-u8 i=0;
-u8 d=0;
-u8 A=0;
-u8 S=0;
-u8 p=0;
-u8 switchP=0;
-u8 switchI=0;
-u8 switchD=0;
-u8 switchspeed=0;
-u8 switchangle=0;
-u8 Break=0;
+u8 i=0;  //切换按键显示的位数
+u8 d=0;  
+u8 A=0;  
+u8 S=0;  
+u8 p=0;  
+u8 switchP=0;      //控制按键切换到P控制
+u8 switchI=0;      //控制按键切换到I控制
+u8 switchD=0;      //控制按键切换到D控制
+u8 switchspeed=0;     //控制按键切换到速度控制
+u8 switchangle=0;    //控制按键切换到角度控制
+u8 Break=0;        //用来切换上位机控制和按键控制
 
-void lcdspeed(void)
+void lcdspeed(void)        //速度显示函数与速度的PID控制
 {
-  u8 buffer[3];
+  u8 buffer[3];      //速度显示函数位的定义
 	if(TIM5CH1_CAPTURE_STA&0X80)//成功捕获到了一次上升沿
 	{
 		cnt=TIM5CH1_CAPTURE_STA&0X3F;
@@ -106,21 +102,21 @@ void lcdspeed(void)
 		LCD_ShowString(95,35,85,40,24,buffer);
 	}
 	TIM5->CNT=0;
-	para=IncPIDCalc(temp);
+	para=IncPIDCalc(temp);      //PID调节速度
 	dcmotor_speed +=para;  
-	if(dcmotor_speed>60000)dcmotor_speed=0;      
+	//if(dcmotor_speed>60000)dcmotor_speed=0;      
 	DCMOTOR_25GA370_Contrl(1,1,dcmotor_speed);
 }
-void drawspeed(void)
+void drawspeed(void)    //画速度图像
 {
-	u8 set;
-	u8 a;
-	count+=10;
-	LCD_DrawLine(count,450-temp*2,count+10,450-temp*2);
+	u8 set;    //画速度刻度
+	u8 a;     //画角度刻度
+	count+=10;    //从x为10开始画
+	LCD_DrawLine(count,450-temp*2,count+10,450-temp*2);//
 	if(count>450)
 	{
 		count=37;
-		LCD_Fill(47,212,468,448,WHITE);
+		LCD_Fill(47,212,468,448,WHITE);   //当画图像为450时，清屏
 	}
 	for(set=0;set<=10;set++)
 	{
@@ -131,7 +127,7 @@ void drawspeed(void)
 		LCD_DrawLine(45,a*5+500,33,a*5+500);
 		LCD_DrawLine(45,590,28,590);
 	}
-	LCD_ShowString(15,35,85,40,24,"Speed:");
+	LCD_ShowString(15,35,85,40,24,"Speed:");//显示屏幕整体的框图
 	LCD_ShowString(245,35,85,40,24,"Angle:");
 	LCD_ShowString(15,135,65,40,24,"Set   Speed:");
 	LCD_ShowString(245,135,65,40,24,"Set   Angle:");
@@ -163,16 +159,16 @@ void drawspeed(void)
 }
 void USART(void)
 {
-	#define SIZE0 sizeof(str)
-	u16 seat; 
-  u8 uart=0;	
-	u16 len;	
-	u8 str[15];
-	u8 speed[4];
-	u8 ptr[4];
-	u8 itr[4];
-	u8 dtr[4];
-	u8 datatemp0[SIZE0];
+	#define SIZE0 sizeof(str)   //定义一个储存地址
+	u16 seat;                 //串口接收位
+  u8 uart=0;               //串口发送数据上位机保存设定
+	u16 len;	               //串口数据的长度
+	u8 str[15];              //接收串口发送的数据
+	u8 speed[4];             //速度转换
+	u8 ptr[4];               //P转换
+	u8 itr[4];               //I转换
+	u8 dtr[4];               //D转换
+	u8 datatemp0[SIZE0];     //接收数据的长度与保存数据的列表
 	if(USART_RX_STA&0x8000)
 		{					   
 			len=USART_RX_STA&0x3fff;//得到此次接收到的数据长度
@@ -182,13 +178,13 @@ void USART(void)
 				USART_SendData(USART1, USART_RX_BUF[seat]);//向串口1发送数据
 				while(USART_GetFlagStatus(USART1,USART_FLAG_TC)!=SET)//等待发送结束
 				{
-					uart=1;
+					uart=1;//
 				}
 			}
 			printf("\r\n\r\n");//插入换行
 			USART_RX_STA=0;
 		}
-		str[0]=USART_RX_BUF[0];
+		str[0]=USART_RX_BUF[0];         //接收串口发送的数据
 		str[1]=USART_RX_BUF[1];
 		str[2]=USART_RX_BUF[2];
 		str[3]=USART_RX_BUF[3];
@@ -203,12 +199,12 @@ void USART(void)
 		str[12]=USART_RX_BUF[12];
 		str[13]=USART_RX_BUF[13];
 		str[14]=USART_RX_BUF[14];
-		if(uart)
+		if(uart)                        //判断串口发出指令没有，发出然后保存
 		{
 			AT24CXX_Write(0,(u8*)str,SIZE0);
 		}
 		AT24CXX_Read(0,datatemp0,18);
-		speed[0]=datatemp0[0];
+		speed[0]=datatemp0[0];          //速度以及PID转换显示
 		speed[1]=datatemp0[1];
 		speed[2]=datatemp0[2];
 		 
@@ -223,7 +219,7 @@ void USART(void)
 		dtr[0]=datatemp0[12];
 		dtr[1]=datatemp0[13];
 		dtr[2]=datatemp0[14];
-		sptr->SetPoint=atoi((char*)speed);
+		sptr->SetPoint=atoi((char*)speed);          //把串口发送的数据转换为参数
 		LCD_ShowString(95,160,45,40,24,speed);
 		sptr->Proportion=atoi((char*)ptr);
 		LCD_ShowString(92,720,37,40,24,ptr);
@@ -232,61 +228,61 @@ void USART(void)
 		sptr->Derivative=atoi((char*)dtr);
 		LCD_ShowString(400,720,37,40,24,dtr);
 }
-void scan(void)
+void scan(void)    //按键扫描函数
 {
-	key=Remote_Scan();	
+	key=Remote_Scan();	//检测按键
 		if(key)
 		{	  
 			switch(key)
 			{
-				case 98:
+				case 98:                 //转换到P控制
 					switchP=1;
 				  switchI=0;
 				  switchD=0;
 				  switchspeed=0;
 				  switchangle=0;
 				  p=0;break;
-				case 34:
+				case 34:                //转换到I控制
 					switchP=0;
 				  switchI=1;
 				  switchD=0;
 				  switchspeed=0;
 				  switchangle=0;
 				  i=0;break;
-				case 194:
+				case 194:             //转换到D控制
 				  switchP=0;
 				  switchI=0;
 				  switchD=1;
 				  switchspeed=0;
 				  switchangle=0;
 				  d=0;break;
-				case 2:
+				case 2:                 //转换到速度控制
 					switchP=0;
 				  switchI=0;
 				  switchD=0;
 				  switchspeed=1;
 				  switchangle=0;
 				  S=0;break;
-				case 168:
+				case 168:               //转换到角度控制
 					switchP=0;
 				  switchI=0;
 				  switchD=0;
 				  switchspeed=0;
 				  switchangle=1;
 				  A=0;break;
-				case 162:
+				case 162:              //保存修改，切换到上位机修改
 					switchP=0;
 				  switchI=0;
 				  switchD=0;
 				  switchspeed=0;
 				  switchangle=0;
 				  Break=1;break;
-				case 226:
+				case 226:               //保存修改，切换到按键修改
 					Break=0;LCD_Fill(0,0,475,790,WHITE);break;
 			}
 		}
 }
-void ScanAll(void)
+void ScanAll(void)                //控制扫描函数
 {
 	controlP();
 	controlI();
@@ -294,7 +290,7 @@ void ScanAll(void)
 	controlSpeed();
 	controlAngle();
 }
-void controlP(void)
+void controlP(void)             //按键控制P参数修改
 {
 	u8 Pis[255];
 //	#define SIZE1 sizeof(Pis)
@@ -336,7 +332,7 @@ void controlP(void)
 //	LCD_ShowString(92,720,37,40,24,datatemp1);
 	
 }
-void controlI(void)
+void controlI(void)             //按键控制I参数修改
 {
 	u8 Iis[255];
 //	#define SIZE2 sizeof(Iis)
@@ -376,7 +372,7 @@ void controlI(void)
 //	AT24CXX_Read(528,datatemp2,255);
 //	LCD_ShowString(246,720,37,40,24,datatemp2);
 }
-void controlD(void)
+void controlD(void)             //按键控制D参数修改
 {
 	u8 Dis[255];
 //	#define SIZE3 sizeof(Dis)
@@ -417,7 +413,7 @@ void controlD(void)
 //	LCD_ShowString(400,720,37,40,24,datatemp3);
 }
 
-void controlSpeed(void)
+void controlSpeed(void)             //按键控制速度参数修改
 {
 	u8 Sis[255];
 //	#define SIZE4 sizeof(Sis)
@@ -457,7 +453,7 @@ void controlSpeed(void)
 //	AT24CXX_Read(4,datatemp4,255);
 //	LCD_ShowString(95,160,45,40,24,datatemp4);
 }
-void controlAngle(void)
+void controlAngle(void)             //按键控制角度参数修改
 {
 	u8 Ais[255];
 //	#define SIZE5 sizeof(Ais)
@@ -496,3 +492,13 @@ void controlAngle(void)
 //	AT24CXX_Read(5,datatemp5,255);
 //	LCD_ShowString(325,160,45,40,24,datatemp5);
 }
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		

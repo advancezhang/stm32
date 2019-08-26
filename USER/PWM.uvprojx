@@ -429,11 +429,6 @@
           <GroupName>HARDWARE</GroupName>
           <Files>
             <File>
-              <FileName>key.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\KEY\key.c</FilePath>
-            </File>
-            <File>
               <FileName>encoder.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\Encoder\encoder.c</FilePath>
@@ -447,11 +442,6 @@
               <FileName>brush.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\HARDWARE\BRUSH\brush.c</FilePath>
-            </File>
-            <File>
-              <FileName>timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\HARDWARE\TIMER\timer.c</FilePath>
             </File>
             <File>
               <FileName>24cxx.c</FileName>
