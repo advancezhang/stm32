@@ -309,13 +309,13 @@ void controlP(void)             //按键控制P参数修改
 				case 82:Pis[p] = '.';Pis[p+1] = '\0';p+=1;break;
 				
 			}
-		while(p>=3)             //
+		while(p>=3)             //如果显示的位数大于3，从第一位开始重新显示
 		{
 			p=0;
 		}
-		sptr->Proportion=atoi((char*)Pis);            //
-		LCD_ShowString(15,750,37,40,24,"P");          //
-		LCD_ShowString(92,720,37,40,24,Pis);          //
+		sptr->Proportion=atoi((char*)Pis);            //将按键调节的结果赋予参数P
+		LCD_ShowString(15,750,37,40,24,"P");          //显示现在处于的调节状态
+		LCD_ShowString(92,720,37,40,24,Pis);          //显示调节的值
 		} 
 	}
 
