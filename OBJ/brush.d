@@ -2,7 +2,7 @@
 ..\obj\brush.o: ..\HARDWARE\BRUSH\brush.h
 ..\obj\brush.o: ..\USER\stm32f10x.h
 ..\obj\brush.o: ..\CORE\core_cm3.h
-..\obj\brush.o: F:\Keil\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\brush.o: I:\Baidu\MDK\ARM\ARMCC\Bin\..\include\stdint.h
 ..\obj\brush.o: ..\USER\system_stm32f10x.h
 ..\obj\brush.o: ..\USER\stm32f10x_conf.h
 ..\obj\brush.o: ..\STM32F10x_FWLib\inc\stm32f10x_adc.h

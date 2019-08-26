@@ -1,11 +1,9 @@
 #include "delay.h"
 #include "usart.h"
 #include "encoder.h"
-#include "key.h"
 #include "lcd.h"
 #include "stdio.h"
 #include "brush.h" 
-#include "24cxx.h"
 #include "usmart.h"	 
 #include "24cxx.h"
 #include "show.h"
@@ -13,24 +11,23 @@
 
 typedef struct 
 {
-   __IO int      SetPoint;                                 //设定目标 Desired Value
-   __IO double   Proportion;                               //比例常数 Proportional Const
-   __IO double   Integral;                                 //积分常数 Integral Const
-   __IO double   Derivative;                               //微分常数 Derivative Const
-   __IO int      LastError;                                //Error[-1]
-   __IO int      PrevError;                                //Error[-2]
+   int      SetPoint;                                 //设定目标 Desired Value
+   double   Proportion;                               //比例常数 Proportional Const
+   double   Integral;                                 //积分常数 Integral Const
+   double   Derivative;                               //微分常数 Derivative Const
+   int      LastError;                                //Error[-1]
+   int      PrevError;                                //Error[-2]
 }PID;
 
 
-float P_DATA=1.5;                               //P参数
-float I_DATA=3.8;                                //I参数
-float D_DATA=6.4;                               //D参数
+float P_DATA;                               //P参数
+float I_DATA;                                //I参数
+float D_DATA;                               //D参数
 
-uint16_t dcmotor_speed=3000;   //
-double encoder_speed=0;
+u16 dcmotor_speed=3000;   //为PID调节提供初始增加值
 u16 count=37;
 
-static PID sPID;   //
+static PID sPID;   //PID的地址设定
 static PID *sptr = &sPID;
 
 /**************PID参数初始化********************************/
@@ -89,10 +86,10 @@ void lcdspeed(void)        //速度显示函数与速度的PID控制
 		TIM5CH1_CAPTURE_STA=0;//开启下一次捕获
 	}
 	adcx=TIM5->CNT;
-	temp=(float)adcx*0.7;
+	temp=(float)adcx*0.72;
 	if(temp>2000)
 	{
-		temp=65535*0.7-temp;
+		temp=65535*0.72-temp;
 		sprintf((char*)buffer,"%.2f",temp);
 	  LCD_ShowString(95,35,85,40,24,buffer);
 	}
@@ -103,8 +100,7 @@ void lcdspeed(void)        //速度显示函数与速度的PID控制
 	}
 	TIM5->CNT=0;
 	para=IncPIDCalc(temp);      //PID调节速度
-	dcmotor_speed +=para;  
-	//if(dcmotor_speed>60000)dcmotor_speed=0;      
+	dcmotor_speed +=para;     
 	DCMOTOR_25GA370_Contrl(1,1,dcmotor_speed);
 }
 void drawspeed(void)    //画速度图像
@@ -112,7 +108,7 @@ void drawspeed(void)    //画速度图像
 	u8 set;    //画速度刻度
 	u8 a;     //画角度刻度
 	count+=10;    //从x为10开始画
-	LCD_DrawLine(count,450-temp*2,count+10,450-temp*2);//
+	LCD_DrawLine(count,450-temp*2,count+10,450-temp*2);   //画波形
 	if(count>450)
 	{
 		count=37;
@@ -501,4 +497,22 @@ void controlAngle(void)             //按键控制角度参数修改
 		
 		
 		
-		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

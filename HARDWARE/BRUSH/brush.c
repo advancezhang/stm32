@@ -147,10 +147,10 @@ void DCMOTOR_25GA370_Contrl(uint8_t number,uint8_t direction,uint16_t speed)
       TIM_SetCompare1(DCMOTOR_BRUSH_TIMx,speed);
       break; 
 
-   case 4:
+   case 2:
      TIM_CtrlPWMOutputs(DCMOTOR_BRUSH_TIMx,ENABLE);  // 使能输出PWM，开始转动
      break;
-   case 5:
+   case 3:
      TIM_CtrlPWMOutputs(DCMOTOR_BRUSH_TIMx,DISABLE);  // 停止输出PWM，停机
      break;
    default:
