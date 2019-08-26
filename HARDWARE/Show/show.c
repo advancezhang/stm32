@@ -25,7 +25,7 @@ float I_DATA;                                //I参数
 float D_DATA;                               //D参数
 
 u16 dcmotor_speed=3000;   //为PID调节提供初始增加值
-u16 count=37;
+u16 count=37;             //波形的初始位置
 
 static PID sPID;   //PID的地址设定
 static PID *sptr = &sPID;
@@ -56,7 +56,7 @@ int IncPIDCalc(int NextPoint)
 extern u8  TIM5CH1_CAPTURE_STA;		//输入捕获状态		    				
 extern u16	TIM5CH1_CAPTURE_VAL;	//输入捕获值	
 
-u16 adcx;  
+u16 adcx;  //记录上升沿
 float temp;
 float para;   //调整控制的PID差值
 float cnt;    //显示测定的速度
@@ -114,7 +114,7 @@ void drawspeed(void)    //画速度图像
 		count=37;
 		LCD_Fill(47,212,468,448,WHITE);   //当画图像为450时，清屏
 	}
-	for(set=0;set<=10;set++)
+	for(set=0;set<=10;set++)    //画刻度
 	{
 		LCD_DrawLine(45,set*20+230,33,set*20+230);
 	}
