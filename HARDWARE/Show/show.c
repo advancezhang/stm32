@@ -289,8 +289,6 @@ void ScanAll(void)                //控制扫描函数
 void controlP(void)             //按键控制P参数修改
 {
 	u8 Pis[255];
-//	#define SIZE1 sizeof(Pis)
-//	u8 datatemp1[SIZE1];
 	key=Remote_Scan();
 	if(switchP)
 	{
@@ -320,19 +318,12 @@ void controlP(void)             //按键控制P参数修改
 		LCD_ShowString(92,720,37,40,24,Pis);
 		}
 	}
-//	if(Break)
-//  {
-//	  AT24CXX_Write(273,(u8*)Pis,SIZE1);
-//  }
-//	AT24CXX_Read(273,datatemp1,255);
-//	LCD_ShowString(92,720,37,40,24,datatemp1);
+
 	
 }
 void controlI(void)             //按键控制I参数修改
 {
 	u8 Iis[255];
-//	#define SIZE2 sizeof(Iis)
-//	u8 datatemp2[SIZE2];
 	key=Remote_Scan();
 	if(switchI)
 	{
@@ -361,18 +352,10 @@ void controlI(void)             //按键控制I参数修改
 			LCD_ShowString(15,750,37,40,24,"I");
 		}
 	}
-//	if(Break)
-//  {
-//	  AT24CXX_Write(528,(u8*)Iis,SIZE2);
-//  }
-//	AT24CXX_Read(528,datatemp2,255);
-//	LCD_ShowString(246,720,37,40,24,datatemp2);
 }
 void controlD(void)             //按键控制D参数修改
 {
 	u8 Dis[255];
-//	#define SIZE3 sizeof(Dis)
-//	u8 datatemp3[SIZE3];
 	key=Remote_Scan();
 	if(switchD)
 	{
@@ -401,19 +384,11 @@ void controlD(void)             //按键控制D参数修改
 			LCD_ShowString(15,750,37,40,24,"D");
 		}
 	}
-//	if(Break)
-//  {
-//	  AT24CXX_Write(3,(u8*)Dis,SIZE3);
-//  }
-//	AT24CXX_Read(3,datatemp3,255);
-//	LCD_ShowString(400,720,37,40,24,datatemp3);
 }
 
 void controlSpeed(void)             //按键控制速度参数修改
 {
 	u8 Sis[255];
-//	#define SIZE4 sizeof(Sis)
-//	u8 datatemp4[SIZE4];
 	key=Remote_Scan();
 	if(switchspeed)
 	{
@@ -442,18 +417,10 @@ void controlSpeed(void)             //按键控制速度参数修改
 			LCD_ShowString(15,750,37,40,24,"S");
 		}
 	}
-//	if(Break)
-//  {
-//	  AT24CXX_Write(4,(u8*)Sis,SIZE4);
-//  }
-//	AT24CXX_Read(4,datatemp4,255);
-//	LCD_ShowString(95,160,45,40,24,datatemp4);
 }
 void controlAngle(void)             //按键控制角度参数修改
 {
 	u8 Ais[255];
-//	#define SIZE5 sizeof(Ais)
-//	u8 datatemp5[SIZE5];
 	key=Remote_Scan();
 	if(switchangle)
 	{
@@ -481,12 +448,6 @@ void controlAngle(void)             //按键控制角度参数修改
 		  LCD_ShowString(15,750,37,40,24,"A");
 		}
 	}
-//	if(Break)
-//  {
-//	  AT24CXX_Write(5,(u8*)Ais,SIZE5);
-//  }
-//	AT24CXX_Read(5,datatemp5,255);
-//	LCD_ShowString(325,160,45,40,24,datatemp5);
 }
 	
 		
